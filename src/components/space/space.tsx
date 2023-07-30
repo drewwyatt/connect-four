@@ -14,6 +14,7 @@ const Space: FC<Props> = ({ index }) => {
     <input
       type="checkbox"
       className={classNames(styles.space, indexToClassName(index))}
+      checked={[1, 2].includes(index % 3)}
     />
   )
 }
