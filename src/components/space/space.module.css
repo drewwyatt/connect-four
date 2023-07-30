@@ -1,18 +1,22 @@
 .space {
+  --color: var(--kiwi);
+
   appearance: none;
   background: none;
-  border: 1px solid var(--kiwi);
+  border: 1px solid var(--color);
   border-radius: 50%;
   width: var(--space-size);
   height: var(--space-size);
 }
 
-.player1 {
-  background-color: var(--lime);
-  border-color: var(--lime);
+.space:checked {
+  background-color: var(--color);
 }
 
-.player2 {
-  background-color: var(--purple);
-  border-color: var(--purple);
+.space:checked.player1 {
+  --color: var(--lime);
+}
+
+.space:checked.player2 {
+  --color: var(--purple);
 }
