@@ -6,3 +6,13 @@
   width: var(--space-size);
   height: var(--space-size);
 }
+
+.player1 {
+  background-color: var(--lime);
+  border-color: var(--lime);
+}
+
+.player2 {
+  background-color: var(--purple);
+  border-color: var(--purple);
+}

@@ -12,12 +12,13 @@
   --orangeRGB: 255, 133, 88;
   --pink: rgb(255, 85, 152);
   --pinkRGB: 255, 85, 152;
+  --purple: rgb(183, 71, 255);
 
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: var(--pinkRGB);
   --background-end-rgb: var(--orangeRGB);
 
-  --board-width: 800px;
+  --board-width: 320px;
   --space-size: 30px;
 }
 

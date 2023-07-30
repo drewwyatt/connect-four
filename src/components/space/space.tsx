@@ -1,8 +1,21 @@
 import type { FC } from 'react'
+import { classNames } from '~/lib/utils'
 import styles from './space.module.css'
 
-type Props = {}
+type Props = {
+  index: number
+}
 
-const Space: FC = () => <input type="checkbox" className={styles.space} />
+const indexToClassName = (index: number) =>
+  index % 3 === 1 ? styles.player1 : index % 3 === 2 ? styles.player2 : null
+
+const Space: FC<Props> = ({ index }) => {
+  return (
+    <input
+      type="checkbox"
+      className={classNames(styles.space, indexToClassName(index))}
+    />
+  )
+}
 
 export default Space

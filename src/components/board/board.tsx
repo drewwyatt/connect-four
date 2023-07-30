@@ -9,7 +9,7 @@ const Board: FC = () => {
   return (
     <article className={styles.board}>
       {range(numberOfSlots).map(i => (
-        <Space key={i} />
+        <Space key={i} index={i} />
       ))}
     </article>
   )
