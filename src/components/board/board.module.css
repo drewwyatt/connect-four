@@ -10,3 +10,8 @@
   grid-template-rows: repeat(6, 1fr);
   row-gap: 10px;
 }
+
+.caption {
+  padding-bottom: 25px;
+  text-align: center;
+}

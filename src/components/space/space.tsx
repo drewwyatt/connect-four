@@ -1,13 +1,12 @@
 import type { FC } from 'react'
 
 import { Token } from '~/lib/models'
-import { useDrop, useIsColumnFull } from '~/lib/state'
+import { useDrop, useTokenForSpace } from '~/lib/state'
 import { classNames } from '~/lib/utils'
 import styles from './space.module.css'
 
 type Props = {
   index: number
-  token: Token | null
 }
 
 const tokenToClassName = (token: Token | null) => {
@@ -21,9 +20,9 @@ const tokenToClassName = (token: Token | null) => {
   return null
 }
 
-const Space: FC<Props> = ({ index, token }) => {
+const Space: FC<Props> = ({ index }) => {
+  const [token, colIsFull] = useTokenForSpace(index)
   const drop = useDrop(index)
-  const colIsFull = useIsColumnFull(index)
 
   return (
     <input
