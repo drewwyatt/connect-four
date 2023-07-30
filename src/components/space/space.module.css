@@ -5,8 +5,13 @@
   background: none;
   border: 1px solid var(--color);
   border-radius: 50%;
+  cursor: pointer;
   width: var(--space-size);
   height: var(--space-size);
+}
+
+.space:disabled {
+  cursor: default;
 }
 
 .space:checked {
