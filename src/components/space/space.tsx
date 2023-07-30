@@ -30,7 +30,7 @@ const Space: FC<Props> = ({ index }) => {
       className={classNames(styles.space, tokenToClassName(token))}
       checked={!!token}
       disabled={colIsFull}
-      onChange={() => drop(Token.playerOne)}
+      onChange={drop}
     />
   )
 }

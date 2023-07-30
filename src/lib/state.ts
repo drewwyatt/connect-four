@@ -19,18 +19,20 @@ import {
 type GameState = {
   spaces: Space[]
   turn: Token
-  drop(columnIndex: number, token: Token): void
+  drop(columnIndex: number): void
 }
 
 const useGameStore = create(
   immer<GameState>(set => ({
     spaces: fill(range(BOARD_WIDTH * BOARD_HEIGHT), Space.empty),
     turn: Token.playerOne,
-    drop: (columnIndex: number, token: Token) =>
+    drop: (columnIndex: number) =>
       set(state => {
         const slotIndex = firstEmptySlotForColumn(state.spaces, columnIndex)
+        const token = state.turn
         if (slotIndex > -1) {
           state.spaces[slotIndex] = spaceFromToken(token)
+          state.turn = state.turn === Token.playerOne ? Token.playerTwo : Token.playerOne
         }
       }),
   })),
@@ -49,7 +51,7 @@ export const useTokenForSpace = (
 
 export const useDrop = (spaceIndex: number) =>
   useGameStore(
-    store => (token: Token) => store.drop(spaceToColumnIndex(spaceIndex), token),
+    store => () => store.drop(spaceToColumnIndex(spaceIndex)),
     () => true,
   )
 
