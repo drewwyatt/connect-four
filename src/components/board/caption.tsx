@@ -8,7 +8,14 @@ const Caption: FC = () => {
   const turn = useCurrentTurn()
   const player = turn === Token.playerOne ? 'Player One' : 'Player Two'
 
-  return <figcaption className={styles.caption}>{`${player}'s Turn`}</figcaption>
+  return (
+    <figcaption className={styles.caption}>
+      <strong>
+        <u>{player}</u>
+      </strong>
+      's Turn
+    </figcaption>
+  )
 }
 
 export default Caption
