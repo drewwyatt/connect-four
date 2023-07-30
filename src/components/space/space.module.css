@@ -13,10 +13,10 @@
   background-color: var(--color);
 }
 
-.space:checked.player1 {
+.space:checked.playerOne {
   --color: var(--lime);
 }
 
-.space:checked.player2 {
+.space:checked.playerTwo {
   --color: var(--purple);
 }

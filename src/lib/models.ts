@@ -1,7 +1,8 @@
+import range from 'lodash/range'
 import { BOARD_HEIGHT } from '~/constants'
 
 export enum SlotState {
-  unclaimed,
+  empty,
   playerOne,
   playerTwo,
 }
@@ -33,3 +34,10 @@ export const indexToCoords = (index: number): Coords => [
 
 export const coordsToIndex = ([x, y]: Coords): number =>
   x * BOARD_HEIGHT + BOARD_HEIGHT - y - 1
+
+export const firstEmptySlotForColumn = (board: BoardState, colIndex: number) => {
+  const end = colIndex * BOARD_HEIGHT
+  const start = end + BOARD_HEIGHT - 1
+
+  return range(start, end).find(index => board[index] === SlotState.empty)
+}
