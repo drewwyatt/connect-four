@@ -24,6 +24,9 @@
     rgba(1, 65, 255, 0),
     rgba(1, 65, 255, 0.3)
   );
+
+  --board-width: 800px;
+  --space-size: 30px;
 }
 
 * {

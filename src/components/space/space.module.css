@@ -1,0 +1,8 @@
+.space {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--kiwi);
+  border-radius: 50%;
+  width: var(--space-size);
+  height: var(--space-size);
+}
