@@ -28,14 +28,6 @@ export const spaceFromToken = (token: Token): Space =>
 
 export type Coords = [x: number, y: number]
 
-export const indexToCoords = (index: number): Coords => [
-  index / BOARD_HEIGHT,
-  BOARD_HEIGHT - (index % BOARD_HEIGHT) - 1,
-]
-
-export const coordsToIndex = ([x, y]: Coords): number =>
-  x * BOARD_HEIGHT + BOARD_HEIGHT - y - 1
-
 const rangeForColumn = (columnIndex: number): Space[] => {
   const end = columnIndex * BOARD_HEIGHT - 1
   const start = end + BOARD_HEIGHT
