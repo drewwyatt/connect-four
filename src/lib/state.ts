@@ -14,6 +14,7 @@ import {
   spaceFromToken,
   spaceToColumnIndex,
   tokenForSpace,
+  getWinners,
 } from '~/lib/models'
 
 type GameState = {
@@ -56,3 +57,9 @@ export const useDrop = (spaceIndex: number) =>
   )
 
 export const useCurrentTurn = () => useGameStore(store => store.turn)
+
+export const useWinningSpaces = () =>
+  useGameStore(
+    store => getWinners(store.spaces),
+    ([a], [b]) => a === b,
+  )
