@@ -1,5 +1,5 @@
 import range from 'lodash/range'
-import { BOARD_HEIGHT } from '~/constants'
+import { BOARD_HEIGHT, BOARD_WIDTH, OUT_OF_RANGE_INDEX } from '~/constants'
 
 export enum Space {
   empty,
@@ -43,3 +43,21 @@ export const isColumnFull = (board: Space[], columnIndex: number) =>
 
 export const spaceToColumnIndex = (spaceIndex: number) =>
   Math.floor(spaceIndex / BOARD_HEIGHT)
+
+export const spaceToRight = (index: number): number | null => {
+  const maybeIndex = index + BOARD_HEIGHT
+  return maybeIndex < OUT_OF_RANGE_INDEX ? maybeIndex : null
+}
+
+const bottomRow = range(BOARD_WIDTH).map(i => (BOARD_HEIGHT - 1) * (i + 1))
+export const spaceBelow = (index: number): number | null =>
+  bottomRow.includes(index) ? null : index + 1
+
+export const spaceDiag = (index: number): number | null => {
+  const right = spaceToRight(index)
+  if (typeof right === 'number') {
+    return spaceBelow(right)
+  }
+
+  return null
+}
