@@ -27,7 +27,7 @@ const GameOver: FC = () => {
   return (
     <dialog ref={self} className={styles.gameOver}>
       <Heading winner={winner} />
-      <ResetButton>Play Again</ResetButton>
+      <ResetButton className={styles.playAgain}>Play Again</ResetButton>
     </dialog>
   )
 }
