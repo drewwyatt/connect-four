@@ -21,12 +21,17 @@ type GameState = {
   spaces: Space[]
   turn: Token
   drop(columnIndex: number): void
+  reset(): void
+}
+
+const INITIAL_STATE: Pick<GameState, 'spaces' | 'turn'> = {
+  spaces: fill(range(BOARD_WIDTH * BOARD_HEIGHT), Space.empty),
+  turn: Token.playerOne,
 }
 
 const useGameStore = create(
   immer<GameState>(set => ({
-    spaces: fill(range(BOARD_WIDTH * BOARD_HEIGHT), Space.empty),
-    turn: Token.playerOne,
+    ...INITIAL_STATE,
     drop: (columnIndex: number) =>
       set(state => {
         const slotIndex = firstEmptySlotForColumn(state.spaces, columnIndex)
@@ -35,6 +40,10 @@ const useGameStore = create(
           state.spaces[slotIndex] = spaceFromToken(token)
           state.turn = state.turn === Token.playerOne ? Token.playerTwo : Token.playerOne
         }
+      }),
+    reset: () =>
+      set(state => {
+        state.spaces = INITIAL_STATE.spaces
       }),
   })),
 )
@@ -57,6 +66,14 @@ export const useDrop = (spaceIndex: number) =>
   )
 
 export const useCurrentTurn = () => useGameStore(store => store.turn)
+
+export const useGameOver = (): [isGameOver: boolean, winner: Token | null] =>
+  useGameStore(store => {
+    const [winner] = getWinners(store.spaces)
+    return [!!winner || store.spaces.every(s => s !== Space.empty), winner]
+  })
+
+export const useReset = () => useGameStore(store => store.reset)
 
 export const useWinningSpaces = () =>
   useGameStore(

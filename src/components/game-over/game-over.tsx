@@ -1,14 +1,19 @@
 'use client'
 import type { FC } from 'react'
-import { playerNameForToken } from '~/lib/models'
-import { useWinningSpaces } from '~/lib/state'
+import { Token, playerNameForToken } from '~/lib/models'
+import { useGameOver, useReset } from '~/lib/state'
+
+const Heading: FC<{ winner: Token | null }> = ({ winner }) =>
+  !!winner ? <h1>{playerNameForToken(winner)} Wins!</h1> : <h1>It's a Draw!</h1>
 
 const GameOver: FC = () => {
-  const [winner] = useWinningSpaces()
+  const [isGameOver, winner] = useGameOver()
+  const reset = useReset()
   return (
-    winner && (
+    isGameOver && (
       <dialog open>
-        <p>{playerNameForToken(winner)}</p>
+        <Heading winner={winner} />
+        <button onClick={reset}>Play Again</button>
       </dialog>
     )
   )
