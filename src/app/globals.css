@@ -7,12 +7,14 @@
 
   --kiwi: rgb(52, 232, 149);
   --lime: rgb(240, 233, 65);
-  --limeRGB: 240, 233, 65;
   --orange: rgb(255, 133, 88);
   --orangeRGB: 255, 133, 88;
   --pink: rgb(255, 85, 152);
   --pinkRGB: 255, 85, 152;
   --purple: rgb(183, 71, 255);
+  --darkGray: rgb(33, 44, 42);
+  --darkGray80: rgba(33, 44, 42, 0.8);
+  --white: rgb(248, 248, 242);
 
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: var(--pinkRGB);

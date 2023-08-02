@@ -1,6 +1,6 @@
 .board {
   border: 2px solid var(--kiwi);
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   padding: 25px;
   width: var(--board-width);
 
