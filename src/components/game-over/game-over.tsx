@@ -1,7 +1,9 @@
 'use client'
-import { FC, useCallback, useEffect, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import { Token, playerNameForToken } from '~/lib/models'
-import { useGameOver, useReset } from '~/lib/state'
+import { useGameOver } from '~/lib/state'
+import ResetButton from '~/components/reset-button'
+
 import styles from './game-over.module.css'
 
 const Heading: FC<{ winner: Token | null }> = ({ winner }) => (
@@ -12,26 +14,20 @@ const Heading: FC<{ winner: Token | null }> = ({ winner }) => (
 
 const GameOver: FC = () => {
   const [isGameOver, winner] = useGameOver()
-  const reset = useReset()
   const self = useRef<HTMLDialogElement | null>(null)
-
-  const onClick = useCallback(() => {
-    reset()
-    self.current?.close()
-  }, [reset])
 
   useEffect(() => {
     if (isGameOver) {
       self.current?.showModal()
+    } else {
+      self.current?.close()
     }
   }, [isGameOver])
 
   return (
     <dialog ref={self} className={styles.gameOver}>
       <Heading winner={winner} />
-      <button className={styles.playAgain} onClick={onClick}>
-        Play Again
-      </button>
+      <ResetButton>Play Again</ResetButton>
     </dialog>
   )
 }
