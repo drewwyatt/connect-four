@@ -1,19 +1,26 @@
 import type { FC } from 'react'
 
-import { Token, playerNameForToken } from '~/lib/models'
-import { useCurrentTurn } from '~/lib/state'
+import { playerNameForToken } from '~/lib/models'
+import { useCurrentTurn, useGameOver } from '~/lib/state'
 import styles from './board.module.css'
+
+const PlayerTurn: FC<{ name: string }> = ({ name }) => (
+  <>
+    <strong>
+      <u>{name}</u>
+    </strong>
+    's Turn
+  </>
+)
 
 const Caption: FC = () => {
   const turn = useCurrentTurn()
+  const [isGameOver] = useGameOver()
   const player = playerNameForToken(turn)
 
   return (
     <figcaption className={styles.caption}>
-      <strong>
-        <u>{player}</u>
-      </strong>
-      's Turn
+      {isGameOver ? 'Game Over' : <PlayerTurn name={player} />}
     </figcaption>
   )
 }

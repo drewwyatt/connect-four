@@ -1,9 +1,19 @@
+.game {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .board {
   border: 2px solid var(--kiwi);
   border-radius: var(--border-radius);
   padding: 25px;
   width: var(--board-width);
+}
 
+.spaces {
+  border: none;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(7, 1fr);

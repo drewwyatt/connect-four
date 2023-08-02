@@ -2,8 +2,10 @@
   appearance: none;
   background: var(--pink);
   border-radius: var(--border-radius);
+  border: none;
   color: var(--white);
-  padding: 10px 20px;
-  font-size: 1.25em;
   cursor: pointer;
+  font-size: 1.25em;
+  margin: 20px auto;
+  padding: 10px 20px;
 }
