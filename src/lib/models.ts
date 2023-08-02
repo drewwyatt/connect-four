@@ -1,4 +1,3 @@
-import { dir } from 'console'
 import range from 'lodash/range'
 import { BOARD_HEIGHT, BOARD_WIDTH, OUT_OF_RANGE_INDEX } from '~/constants'
 
@@ -12,6 +11,9 @@ export enum Token {
   playerOne = 'player-one',
   playerTwo = 'player-two',
 }
+
+export const playerNameForToken = (token: Token) =>
+  token === Token.playerOne ? 'Player One' : 'Player Two'
 
 export const tokenForSpace = (space: Space): Token | null => {
   switch (space) {
@@ -45,52 +47,39 @@ export const isColumnFull = (board: Space[], columnIndex: number) =>
 export const spaceToColumnIndex = (spaceIndex: number) =>
   Math.floor(spaceIndex / BOARD_HEIGHT)
 
-export const getWinners = (
-  board: Space[],
-): [Space.playerOne | Space.playerTwo, number[]] | [null, []] => {
-  const checks = {
-    right: new Set<number>(),
-    down: new Set<number>(),
-    diag: new Set<number>(),
-  }
-
+export const getWinners = (board: Space[]): [Token, number[]] | [null, []] => {
   for (const [index, space] of board.entries()) {
     if (space === Space.empty) continue
 
-    const winners = getConnections(checks, index, space, board).find(Array.isArray)
+    const winners = getConnections(index, space, board).find(Array.isArray)
     if (winners) {
-      return [board[winners[0]] as Space.playerOne | Space.playerTwo, winners]
+      return [tokenForSpace(board[winners[0]])!, winners]
     }
   }
 
   return [null, []]
 }
 
-type Checks = { right: Set<number>; down: Set<number>; diag: Set<number> }
+const DIRECTIONS = ['right', 'diagRight', 'down', 'diagLeft'] as const
+type Direction = (typeof DIRECTIONS)[number]
+
 const getConnections = (
-  checks: Checks,
   index: number,
   space: Space.playerOne | Space.playerTwo,
   board: Space[],
-) => [
-  getConnectionsForDirection('right', checks, [index], space, board),
-  getConnectionsForDirection('diag', checks, [index], space, board),
-  getConnectionsForDirection('down', checks, [index], space, board),
-]
+) =>
+  (['right', 'diagRight', 'down', 'diagLeft'] as const).map(dir =>
+    getConnectionsForDirection(dir, [index], space, board),
+  )
 
 const getConnectionsForDirection = (
-  direction: keyof Checks,
-  checks: Checks,
+  direction: Direction,
   chain: number[],
   space: Space.playerOne | Space.playerTwo,
   board: Space[],
 ): number[] | null => {
   const [lastIndex] = chain.slice(-1)
-  if (checks[direction].has(lastIndex)) {
-    return null
-  }
 
-  checks[direction].add(lastIndex)
   const next = getDirection(direction, lastIndex)
   if (typeof next === 'number' && board[next] === space) {
     const connections = [...chain, next]
@@ -98,16 +87,18 @@ const getConnectionsForDirection = (
       return connections
     }
 
-    return getConnectionsForDirection(direction, checks, connections, space, board)
+    return getConnectionsForDirection(direction, connections, space, board)
   }
 
   return null
 }
 
-const getDirection = (direction: keyof Checks, index: number) => {
+const getDirection = (direction: Direction, index: number) => {
   switch (direction) {
-    case 'diag':
-      return spaceDiag(index)
+    case 'diagRight':
+      return spaceDiagRight(index)
+    case 'diagLeft':
+      return spaceDiagLeft(index)
     case 'down':
       return spaceBelow(index)
     case 'right':
@@ -124,10 +115,24 @@ const bottomRow = range(BOARD_WIDTH).map(i => (BOARD_HEIGHT - 1) * (i + 1))
 const spaceBelow = (index: number): number | null =>
   bottomRow.includes(index) ? null : index + 1
 
-const spaceDiag = (index: number): number | null => {
+const spaceDiagRight = (index: number): number | null => {
   const right = spaceToRight(index)
   if (typeof right === 'number') {
     return spaceBelow(right)
+  }
+
+  return null
+}
+
+const spaceToLeft = (index: number): number | null => {
+  const left = index - BOARD_HEIGHT
+  return left > -1 ? left : null
+}
+
+const spaceDiagLeft = (index: number): number | null => {
+  const left = spaceToLeft(index)
+  if (typeof left === 'number') {
+    return spaceBelow(left)
   }
 
   return null

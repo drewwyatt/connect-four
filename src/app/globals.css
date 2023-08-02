@@ -44,3 +44,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+dialog {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

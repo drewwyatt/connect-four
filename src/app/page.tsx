@@ -1,4 +1,4 @@
-import { Board } from '~/components'
+import { Board, GameOver } from '~/components'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -7,6 +7,7 @@ export default function Home() {
       <h1 className={styles.headline}>Connect Four</h1>
       <div className={styles.center}>
         <Board />
+        <GameOver />
       </div>
     </main>
   )
